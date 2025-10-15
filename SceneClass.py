@@ -12,11 +12,20 @@ class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는
 class SceneManager:
     def __init__(self, scene):
         self.scene = scene  # 현재 장면이 무슨 장면인지 받음
+        self.event =None
         # self.background = scene.background
-    def handle(self):
-        pass
-    def change(self):
-        StateManager()
+    def handle(self,event):
+        if event.type == SDL_KEYDOWN:
+            if event.key == SDLK_n:
+                print("NEXT")
+                self.event = 'NEXT'
+            elif event.key == SDLK_b:
+                print("BACK")
+                self.event = 'BACK'
+
+
+    # def change(self):
+    #     StateManager()
     def update(self):
         self.scene.update()
     def draw(self):
@@ -32,7 +41,7 @@ class StartScene:
         self.start = load_image('화면 리소스/시작 화면/start.png')
         self.exit = load_image('화면 리소스/시작 화면/exit.png')
         self.CCutter = load_image('화면 리소스/시작 화면/쿠키틀.png')
-        print('background image:', self.background)
+        # print('background image:', self.background)
     def draw(self):
         self.title.draw_to_origin(CX - 500, CY+CY/2, 1000, 150)
         self.CCutter.draw_to_origin(CX - 175 - 200, CY - CY/ 4-125, 350, 350)
