@@ -24,25 +24,35 @@ class SceneManager:
 class StartScene:
     def __init__(self):
         self.background = load_image('화면 리소스/시작 화면/background.png')
+        self.title = load_image('화면 리소스/시작 화면/title.png')
+        self.start = load_image('화면 리소스/시작 화면/start.png')
+        self.exit = load_image('화면 리소스/시작 화면/exit.png')
+        self.CCutter = load_image('화면 리소스/시작 화면/쿠키틀.png')
         print('background image:', self.background)
     def draw(self):
-        print("draw StartScene")
+        self.title.draw_to_origin(CX - 500, CY+CY/2, 1000, 150)
+        self.CCutter.draw_to_origin(CX - 175 - 200, CY - CY/ 4-125, 350, 350)
+        self.CCutter.draw_to_origin(CX - 175 + 200, CY - CY / 4-125, 350, 350)
+        self.start.draw_to_origin(CX - 150-200, CY - CY /4, 300, 100)
+        self.exit.draw_to_origin(CX - 100+ 200, CY - CY / 4, 200, 100)
+
     def update(self):
         pass
 
 class CharacterSelect:
     def __init__(self):
-        pass
+        self.background = load_image('화면 리소스/선택 화면/background.png')
     def draw(self):
-        print("draw CharacterSelect")
+        pass
+
     def update(self):
         pass
 
 class CostumeSelect:
     def __init__(self):
-        pass
+        self.background = load_image('화면 리소스/플레이 화면/background.png')
     def draw(self):
-        print("draw CostumeSelect")
+        pass
     def update(self):
         pass
 
