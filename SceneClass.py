@@ -1,32 +1,48 @@
-from pico2d import load_image
 from pico2d import *
 CANVAS_W, CANVAS_H = 1350, 800
 CX, CY = CANVAS_W//2, CANVAS_H//2
-
-
 
 class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는 클래스
     def __init__(self,scene):
         self.scene = scene
 
 class SceneManager:
-    def __init__(self, scene):
-        self.scene = scene  # 현재 장면이 무슨 장면인지 받음
+    def __init__(self, Scene):
+        global scene
+        self.scene = Scene  # 현재 장면이 무슨 장면인지 받음
         self.event =None
+        # self.stateM = StateManager()
+
+        self.START = StartScene
+        self.CHAR = CharacterSelect
+        self.COSTUME = CostumeSelect
+        self.FIGHT = FightScene
+        # self.EXIT =
+        self.scene_flow = {
+            self.START: {'NEXT': self.CHAR, 'BACK': None},
+            self.CHAR: {'NEXT': self.COSTUME, 'BACK': self.START},
+            self.COSTUME: {'NEXT': self.FIGHT, 'BACK': self.CHAR},
+            self.FIGHT: {'BACK': self.CHAR}}
+
+        self.scene = self.START()
         # self.background = scene.background
     def handle(self,event):
         if event.type == SDL_KEYDOWN:
             if event.key == SDLK_n:
-                print("NEXT")
                 self.event = 'NEXT'
             elif event.key == SDLK_b:
-                print("BACK")
                 self.event = 'BACK'
+            self.change(self.event)
 
 
-    # def change(self):
-    #     StateManager()
+    def change(self, state_event):
+        if state_event in self.scene_flow[self.scene.__class__]:
+            next_scene = self.scene_flow[self.scene.__class__][state_event]
+            self.scene = next_scene()
+            return next_scene()
+
     def update(self):
+        print(self.scene)
         self.scene.update()
     def draw(self):
         clear_canvas()
@@ -63,7 +79,7 @@ class CharacterSelect:
 
 class CostumeSelect:
     def __init__(self):
-        self.background = load_image('화면 리소스/플레이 화면/background.png')
+        self.background = load_image('화면 리소스/선택 화면/background.png')
     def draw(self):
         pass
     def update(self):
@@ -71,28 +87,10 @@ class CostumeSelect:
 
 class FightScene:
     def __init__(self):
-        pass
+        self.background = load_image('화면 리소스/플레이 화면/마녀배경.png')
     def draw(self):
-        print("draw FightScene")
+        pass
     def update(self):
         pass
 
-class StateManager:
-        def __init__(self):
-            self.START = StartScene
-            self.CHAR = CharacterSelect
-            self.COSTUME = CostumeSelect
-            self.FIGHT = FightScene
-            # self.EXIT =
-            self.scene_flow = {
-                self.START: {'NEXT': self.CHAR,'BACK':None },
-                self.CHAR: {'NEXT': self.COSTUME, 'BACK': self.START},
-                self.COSTUME: {'NEXT': self.FIGHT, 'BACK': self.CHAR},
-                self.FIGHT: {'BACK': self.CHAR}}
-            self.scene = self.START()
-
-        def flow_event(self, state_event):
-            if state_event in self.scene_flow[self.scene.__class__]:
-                next_scene= self.scene_flow[self.scene.__class__][state_event]
-                self.scene = next_scene()
 

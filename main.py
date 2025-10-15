@@ -13,13 +13,11 @@ def start_game():
 
 def handle_event():
     for event in get_events():
-        print("event", event)
+        # print("event", event)
         manager.handle(event)
 
 def update_screen():
     manager.update()
-
-def render_screen():
     manager.draw()
 
 # 코드 실행 시작================================
@@ -27,6 +25,5 @@ start_game()
 while 1:
     handle_event()
     update_screen()
-    render_screen()
     delay(0.01)
 close_canvas()
