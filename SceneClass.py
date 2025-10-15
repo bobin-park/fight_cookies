@@ -15,6 +15,8 @@ class SceneManager:
         # self.background = scene.background
     def handle(self):
         pass
+    def change(self):
+        StateManager()
     def update(self):
         self.scene.update()
     def draw(self):
@@ -72,9 +74,16 @@ class StateManager:
             self.CHAR = CharacterSelect
             self.COSTUME = CostumeSelect
             self.FIGHT = FightScene
-            self.EXIT = None
+            # self.EXIT =
             self.scene_flow = {
-                self.START: {'NEXT': self.CHAR, 'BACK': self.EXIT},
+                self.START: {'NEXT': self.CHAR,'BACK':None },
                 self.CHAR: {'NEXT': self.COSTUME, 'BACK': self.START},
                 self.COSTUME: {'NEXT': self.FIGHT, 'BACK': self.CHAR},
                 self.FIGHT: {'BACK': self.CHAR}}
+            self.scene = self.START()
+
+        def flow_event(self, state_event):
+            if state_event in self.scene_flow[self.scene.__class__]:
+                next_scene= self.scene_flow[self.scene.__class__][state_event]
+                self.scene = next_scene()
+
