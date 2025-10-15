@@ -1,8 +1,10 @@
 from SceneClass import *
 from pico2d import *
 
+#화면 크기 : 1400*800
+
 def start_game():
-    open_canvas()
+    open_canvas(CANVAS_W, CANVAS_H)
 
     global screen
     global manager
