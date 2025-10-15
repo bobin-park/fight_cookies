@@ -5,10 +5,12 @@ def start_game():
     open_canvas()
 
     global screen
+    global manager
     screen = StartScene()
+    manager = SceneManager(screen)
 
 def update_screen():
-    SceneManager.update(screen)
+    manager.update()
 
 
 start_game()
