@@ -1,6 +1,7 @@
 from pico2d import *
 CANVAS_W, CANVAS_H = 1350, 800
 CX, CY = CANVAS_W//2, CANVAS_H//2
+EXIT = object()
 
 class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는 클래스
     def __init__(self,scene):
@@ -8,7 +9,6 @@ class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는
 
 class SceneManager:
     def __init__(self, Scene):
-        global scene
         self.scene = Scene  # 현재 장면이 무슨 장면인지 받음
         self.event =None
         # self.stateM = StateManager()
@@ -17,14 +17,13 @@ class SceneManager:
         self.CHAR = CharacterSelect
         self.COSTUME = CostumeSelect
         self.FIGHT = FightScene
+
         # self.EXIT =
         self.scene_flow = {
-            self.START: {'NEXT': self.CHAR, 'BACK': None},
+            self.START: {'NEXT': self.CHAR, 'BACK': EXIT},
             self.CHAR: {'NEXT': self.COSTUME, 'BACK': self.START},
             self.COSTUME: {'NEXT': self.FIGHT, 'BACK': self.CHAR},
             self.FIGHT: {'BACK': self.CHAR}}
-
-        self.scene = self.START()
         # self.background = scene.background
     def handle(self,event):
         if event.type == SDL_KEYDOWN:
@@ -36,13 +35,15 @@ class SceneManager:
 
 
     def change(self, state_event):
+        global GRunning
         if state_event in self.scene_flow[self.scene.__class__]:
             next_scene = self.scene_flow[self.scene.__class__][state_event]
-            self.scene = next_scene()
-            return next_scene()
-
+            if next_scene != EXIT:
+                self.scene = next_scene()
+            elif next_scene == EXIT:
+                close_canvas()
+                sys.exit()
     def update(self):
-        print(self.scene)
         self.scene.update()
     def draw(self):
         clear_canvas()
