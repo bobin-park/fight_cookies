@@ -12,8 +12,13 @@ def start_game():
 def update_screen():
     manager.update()
 
+def render_screen():
+    manager.draw()
 
+# 코드 실행 시작================================
 start_game()
 while 1:
     update_screen()
-    pass
+    render_screen()
+    delay(0.01)
+close_canvas()

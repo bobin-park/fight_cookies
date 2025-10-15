@@ -10,7 +10,7 @@ class SceneManager:
     def handle(self):
         pass
     def update(self):
-        pass
+        self.scene.update()
     def draw(self):
         self.scene.draw()
 
@@ -18,23 +18,32 @@ class StartScene:
     def __init__(self):
         self.image = load_image('화면 리소스/시작 화면/background.png')
     def draw(self):
+        print("draw StartScene")
+    def update(self):
         pass
+
 
 
 class CharacterSelect:
     def __init__(self):
         pass
     def draw(self):
+        print("draw CharacterSelect")
+    def update(self):
         pass
 
 class CostumeSelect:
     def __init__(self):
         pass
     def draw(self):
+        print("draw CostumeSelect")
+    def update(self):
         pass
 
 class FightScene:
     def __init__(self):
         pass
     def draw(self):
+        print("draw FightScene")
+    def update(self):
         pass
