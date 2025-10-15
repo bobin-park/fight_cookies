@@ -1,15 +1,21 @@
+from pico2d import load_image
+
 class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는 클래스
     def __init__(self):
         pass
 
 class StartScene:
-    pass
+    def __init__(self):
+        self.image = load_image('')
 
 class CharacterSelect:
-    pass
+    def __init__(self):
+        pass
 
 class CostumeSelect:
-    pass
+    def __init__(self):
+        pass
 
 class FightScene:
-    pass
+    def __init__(self):
+        pass
