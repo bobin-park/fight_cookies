@@ -3,6 +3,8 @@ from pico2d import *
 CANVAS_W, CANVAS_H = 1350, 800
 CX, CY = CANVAS_W//2, CANVAS_H//2
 
+
+
 class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는 클래스
     def __init__(self,scene):
         self.scene = scene
@@ -63,3 +65,16 @@ class FightScene:
         print("draw FightScene")
     def update(self):
         pass
+
+class StateManager:
+        def __init__(self):
+            self.START = StartScene
+            self.CHAR = CharacterSelect
+            self.COSTUME = CostumeSelect
+            self.FIGHT = FightScene
+            self.EXIT = None
+            self.scene_flow = {
+                self.START: {'NEXT': self.CHAR, 'BACK': self.EXIT},
+                self.CHAR: {'NEXT': self.COSTUME, 'BACK': self.START},
+                self.COSTUME: {'NEXT': self.FIGHT, 'BACK': self.CHAR},
+                self.FIGHT: {'BACK': self.CHAR}}
