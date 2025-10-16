@@ -4,6 +4,7 @@ from pico2d import *
 CANVAS_W, CANVAS_H = 1350, 800
 CX, CY = CANVAS_W//2, CANVAS_H//2
 EXIT = object()
+mouse = Mouse()
 
 class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는 클래스
     def __init__(self,scene):
@@ -11,29 +12,28 @@ class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는
 
 class SceneManager:
     def __init__(self, Scene):
-        self.scene = Scene  # 현재 장면이 무슨 장면인지 받음
+        self.scene = Scene
         self.event =None
-        # self.stateM = StateManager()
 
         self.START = StartScene
         self.CHAR = CharacterSelect
         self.COSTUME = CostumeSelect
         self.FIGHT = FightScene
-
-        # self.EXIT =
         self.scene_flow = {
             self.START: {'NEXT': self.CHAR, 'BACK': EXIT},
             self.CHAR: {'NEXT': self.COSTUME, 'BACK': self.START},
             self.COSTUME: {'NEXT': self.FIGHT, 'BACK': self.CHAR},
-            self.FIGHT: {'BACK': self.CHAR}}
-        # self.background = scene.background
+            self.FIGHT: {'BACK': self.CHAR,'NEXT': self.START}}
     def handle(self,event):
         if event.type == SDL_KEYDOWN:
             if event.key == SDLK_n:
                 self.event = 'NEXT'
             elif event.key == SDLK_b:
                 self.event = 'BACK'
-            self.change(self.event)
+        if event.type ==SDL_MOUSEBUTTONDOWN or event.type == SDL_MOUSEBUTTONUP:
+            self.scene.handle(event)
+            print(event.x,event.y)
+        self.change(self.event)
 
 
     def change(self, state_event):
@@ -61,8 +61,8 @@ class StartScene:
         self.exit = load_image('화면 리소스/시작 화면/exit.png')
         self.CCutter = load_image('화면 리소스/시작 화면/쿠키틀.png')
 
-        self.start_btn = ImageBox( self.start ,CX - 150 - 200,  CY - CY / 4,  300,  100, )
-        self.exit_btn = ImageBox( self.exit, CX - 100 + 200,   CY - CY / 4,  200, 100,  )
+        self.start_btn = ImageBox( self.start ,CX - 150 - 200,  CY - CY / 4,  300,  100 )
+        self.exit_btn = ImageBox( self.exit, CX - 100 + 200,   CY - CY / 4,  200, 100 )
 
     def draw(self):
         self.title.draw_to_origin(CX - 500, CY+CY/2, 1000, 150)
@@ -70,6 +70,9 @@ class StartScene:
         self.CCutter.draw_to_origin(CX - 175 + 200, CY - CY / 4-125, 350, 350)
         self.start_btn.draw()
         self.exit_btn.draw()
+
+    def handle(self,event):
+        self.start_btn
 
     def update(self):
         pass
