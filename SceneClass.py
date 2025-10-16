@@ -1,9 +1,10 @@
-from ImageBox import *
+CANVAS_W, CANVAS_H = 1350, 800
+from ImageBox import Mouse,ImageBox
 from pico2d import *
 
-CANVAS_W, CANVAS_H = 1350, 800
 CX, CY = CANVAS_W//2, CANVAS_H//2
 EXIT = object()
+
 mouse = Mouse()
 
 class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는 클래스
@@ -32,7 +33,6 @@ class SceneManager:
                 self.event = 'BACK'
         if event.type ==SDL_MOUSEBUTTONDOWN or event.type == SDL_MOUSEBUTTONUP:
             self.scene.handle(event)
-            print(event.x,event.y)
         self.change(self.event)
 
 
@@ -72,7 +72,8 @@ class StartScene:
         self.exit_btn.draw()
 
     def handle(self,event):
-        self.start_btn
+        mouse.handle(event,self.start_btn)
+        mouse.handle(event, self.exit_btn)
 
     def update(self):
         pass

@@ -1,3 +1,4 @@
+CANVAS_W, CANVAS_H = 1350, 800
 from SceneClass import *
 from pico2d import *
 
