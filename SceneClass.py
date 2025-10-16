@@ -1,4 +1,6 @@
+from ImageBox import *
 from pico2d import *
+
 CANVAS_W, CANVAS_H = 1350, 800
 CX, CY = CANVAS_W//2, CANVAS_H//2
 EXIT = object()
@@ -58,13 +60,18 @@ class StartScene:
         self.start = load_image('화면 리소스/시작 화면/start.png')
         self.exit = load_image('화면 리소스/시작 화면/exit.png')
         self.CCutter = load_image('화면 리소스/시작 화면/쿠키틀.png')
+
+
+        self.start_btn = ImageBox( self.start ,CX - 150 - 200,  CY - CY / 4,  300,  100, )
+        self.exit_btn = ImageBox( self.exit, CX - 100 + 200,   CY - CY / 4,  200, 100,  )
+
         # print('background image:', self.background)
     def draw(self):
         self.title.draw_to_origin(CX - 500, CY+CY/2, 1000, 150)
         self.CCutter.draw_to_origin(CX - 175 - 200, CY - CY/ 4-125, 350, 350)
         self.CCutter.draw_to_origin(CX - 175 + 200, CY - CY / 4-125, 350, 350)
-        self.start.draw_to_origin(CX - 150-200, CY - CY /4, 300, 100)
-        self.exit.draw_to_origin(CX - 100+ 200, CY - CY / 4, 200, 100)
+        self.start_btn.draw()
+        self.exit_btn.draw()
 
     def update(self):
         pass

@@ -6,3 +6,5 @@ class ImageBox:
         self.image=image
         self.x,self.y=x,y
         self.w, self.h = w,h
+    def draw(self):
+        self.image.draw_to_origin(self.x,self.y,self.w,self.h)
