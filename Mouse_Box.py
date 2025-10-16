@@ -5,8 +5,7 @@ class Mouse:
         self.mx,self.my =0,0
     def handle(self,event,imagebox):
         self.mx,self.my=event.x,CANVAS_H - event.y
-        imagebox.mouse(self.mx,self.my)
-        pass
+        return imagebox.mouse(self.mx,self.my)
 
 
 class ImageBox:
@@ -17,6 +16,8 @@ class ImageBox:
     def draw(self):
         self.image.draw_to_origin(self.x,self.y,self.w,self.h)
     def mouse(self,mx,my):
-        if self.x<=mx <=self.x+self.w and self.y<=my<=self.y+self.h:
-            print(self.image)
-        # return self.x<=mx <=self.x+self.w and self.y<=my<=self.y+self.h
+        # if self.x<=mx <=self.x+self.w and self.y<=my<=self.y+self.h:
+        #     print(self.image)
+        # PRINT = self.x<=mx <=self.x+self.w and self.y<=my<=self.y+self.h
+        # print (PRINT)
+        return self.x<=mx <=self.x+self.w and self.y<=my<=self.y+self.h

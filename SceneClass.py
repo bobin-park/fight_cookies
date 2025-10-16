@@ -1,10 +1,9 @@
 CANVAS_W, CANVAS_H = 1350, 800
-from ImageBox import Mouse,ImageBox
+from Mouse_Box import Mouse,ImageBox
 from pico2d import *
 
 CX, CY = CANVAS_W//2, CANVAS_H//2
 EXIT = object()
-
 mouse = Mouse()
 
 class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는 클래스
@@ -14,7 +13,7 @@ class BaceScene: #모든 화면이 공통적으로 수행하는 기능을 담는
 class SceneManager:
     def __init__(self, Scene):
         self.scene = Scene
-        self.event =None
+        self.Next_flow =None
 
         self.START = StartScene
         self.CHAR = CharacterSelect
@@ -28,12 +27,13 @@ class SceneManager:
     def handle(self,event):
         if event.type == SDL_KEYDOWN:
             if event.key == SDLK_n:
-                self.event = 'NEXT'
+                self.Next_flow = 'NEXT'
             elif event.key == SDLK_b:
-                self.event = 'BACK'
-        if event.type ==SDL_MOUSEBUTTONDOWN or event.type == SDL_MOUSEBUTTONUP:
-            self.scene.handle(event)
-        self.change(self.event)
+                self.Next_flow = 'BACK'
+        if event.type ==SDL_MOUSEBUTTONDOWN :#or event.type == SDL_MOUSEBUTTONUP:
+            self.Next_flow= self.scene.handle(event)
+            print(self.Next_flow)
+        self.change(self.Next_flow)
 
 
     def change(self, state_event):
@@ -52,9 +52,11 @@ class SceneManager:
         self.scene.background.draw(CX, CY)
         self.scene.draw()
         update_canvas()
+        self.Next_flow = None
 
 class StartScene:
     def __init__(self):
+        self.Next_flow = None
         self.background = load_image('화면 리소스/시작 화면/background.png')
         self.title = load_image('화면 리소스/시작 화면/title.png')
         self.start = load_image('화면 리소스/시작 화면/start.png')
@@ -72,8 +74,14 @@ class StartScene:
         self.exit_btn.draw()
 
     def handle(self,event):
-        mouse.handle(event,self.start_btn)
-        mouse.handle(event, self.exit_btn)
+        if mouse.handle(event,self.start_btn):
+            print('NEXT')
+            return 'NEXT'
+
+        elif mouse.handle(event, self.exit_btn):
+            print('BACK')
+            return 'BACK'
+        return None
 
     def update(self):
         pass
