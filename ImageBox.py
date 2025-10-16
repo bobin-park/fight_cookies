@@ -8,3 +8,5 @@ class ImageBox:
         self.w, self.h = w,h
     def draw(self):
         self.image.draw_to_origin(self.x,self.y,self.w,self.h)
+    def mouse(self,mx,my):
+        return self.x<=mx <=self.x+self.w and self.y<=my<self.y+self.h
