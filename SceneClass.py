@@ -37,7 +37,6 @@ class SceneManager:
 
 
     def change(self, state_event):
-        global GRunning
         if state_event in self.scene_flow[self.scene.__class__]:
             next_scene = self.scene_flow[self.scene.__class__][state_event]
             if next_scene != EXIT:
